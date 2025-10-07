@@ -43,7 +43,7 @@
 <nav>
     <ul class="nav-list">
         <li><a href="/">INICIO</a></li>
-        <li><a href="{% url 'home' %}#ubicacion">UBICACION</a></li>
+        <li><a href="{% url 'index' %}#ubicacion">UBICACION</a></li>
         <li><a href="{% url 'quienes_somos' %}">QUIENES SOMOS</a></li>
         {% if user.is_authenticated and user.is_superuser %}
         <li><a href="{% url 'lista_asistencia' %}">Lista de Asistencia</a></li>

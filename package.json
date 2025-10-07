@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "jspreadsheet": "^11.20.1"
+  }
+}

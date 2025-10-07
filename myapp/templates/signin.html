@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+
+    <form method="post" class="login-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
+
+        <button type="submit" class="btn-login">Iniciar sesión</button>
+    </form>
+
+    {% if form.errors %}
+        <div class="error-message">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <div class="extra-links">
+        <p>¿No tienes una cuenta? <a href="{% url 'signup' %}">Regístrate aquí</a></p>
+        <p><a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a></p>
+    </div>
+</div>
+{% endblock %}

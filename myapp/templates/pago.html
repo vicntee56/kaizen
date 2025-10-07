@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <style>
+    body {
+      background-color: #000000;
+    }
+
+    .titulo-membresia {
+      font-size: 32px;
+      color: rgb(255, 255, 255) !important; /* Forzado para que se vea rojo */
+      text-align: center;
+      margin-top: -120px; /* Evita margen negativo */
+      margin-bottom: 10px;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      
+      
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px 10px rgba(221, 2, 2, 0.5); /* sombra roja tenue */ /* sombra roja más grande y visible fuera */
+
+      width: 300px;
+      padding: 30px 20px;
+      transition: transform 0.2s ease-in-out;
+      text-align: center;
+      
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .price {
+      font-size: 24px;
+      color: #27ae60;
+      margin: 15px 0;
+    }
+
+    .description {
+      font-size: 15px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .payment-note {
+      font-size: 14px;
+      color: #999;
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+
+    .boton-pago {
+      display: inline-block;
+      background-color: #2196F3;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-size: 16px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+    }
+
+    .boton-pago:hover {
+      background-color: #0b7dda;
+    }
+
+    @media (max-width: 768px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+
+  <h1 class="titulo-membresia">Elige tu Plan de Membresía</h1>
+
+  <div class="cards">
+
+    <!-- Plan Mensual -->
+    <div class="card">
+      <h2>Plan Mensual</h2>
+      <p class="price">$45.300</p>
+      <p class="description">Ideal para quienes quieren probar el servicio sin compromiso.</p>
+      <p class="payment-note">* Al pagar, asegúrate de ingresar el monto correspondiente a este plan.</p>
+      <form action="{% url 'pagar' %}" method="get">
+        <input type="hidden" name="plan" value="mensual">
+        <a href="https://www.webpay.cl/company/92479?utm_source=transbank&utm_medium=app&utm_campaign=link_apptransbank" class="boton-pago">💳 Pagar Ahora</a>
+      </form>
+    </div>
+
+    <!-- Plan Trimestral -->
+    <div class="card">
+      <h2>Plan Trimestral</h2>
+      <p class="price">$170.100</p>
+      <p class="description">Ahorra un 10% al pagar por 3 meses. ¡Más compromiso, más resultados!</p>
+      <p class="payment-note">* Al pagar, asegúrate de ingresar el monto correspondiente a este plan.</p>
+      <form action="{% url 'pagar' %}" method="get">
+        <input type="hidden" name="plan" value="trimestral">
+        <a href="https://www.webpay.cl/company/92479?utm_source=transbank&utm_medium=app&utm_campaign=link_apptransbank" class="boton-pago">💳 Pagar Ahora</a>
+      </form>
+    </div>
+
+    <!-- Plan Semestral -->
+    <div class="card">
+      <h2>Plan Semestral</h2>
+      <p class="price">$321.300</p>
+      <p class="description">Ahorra un 15% y asegura tu progreso por 6 meses. ¡El mejor valor!</p>
+      <p class="payment-note">* Al pagar, asegúrate de ingresar el monto correspondiente a este plan.</p>
+      <form action="{% url 'pagar' %}" method="get">
+        <input type="hidden" name="plan" value="semestral">
+        <a href="https://www.webpay.cl/company/92479?utm_source=transbank&utm_medium=app&utm_campaign=link_apptransbank" class="boton-pago">💳 Pagar Ahora</a>
+      </form>
+    </div>
+
+  </div>
+{% endblock %}

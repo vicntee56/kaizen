@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<!-- Botón flotante de WhatsApp con mensaje -->
+<a href="https://wa.me/56984869876" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Hablar por WhatsApp">
+    <div class="whatsapp-message">¡Contáctame!</div>
+    <img src="{% static 'img/whatsapp-icon.png' %}" alt="WhatsApp" />
+</a>
+
+<div class="container">
+    <div class="hero">
+        <h1>¡ÚNETE A NUESTRO GIMNASIO Y ALCANZA TUS METAS DE FITNESS!</h1>
+    </div>
+
+    <div class="video-container">
+        <video controls>
+            <source src="{% static 'video/video.mp4.mp4' %}" type="video/mp4">
+            Tu navegador no soporta video.
+        </video>
+    </div>
+
+    <div class="parrafo">
+        <p>En Kaizen, entendemos que cada persona tiene objetivos de fitness únicos.</p>
+        <p>Ya sea que estés buscando perder peso, ganar masa muscular, mejorar tu resistencia o simplemente mantenerte activo, ¡nuestro gimnasio es el lugar perfecto para ti!</p>
+    </div>
+</div>
+
+<h1 style="text-align: center; margin: 50px 0; color: #fff;">Características del Gimnasio</h1>
+
+<div class="caracteristicas">
+    <img src="{% static 'img/caracteristica1.jpeg' %}" alt="Características del Gimnasio">
+    <img src="{% static 'img/caracteristica2.jpeg' %}" alt="Características del Gimnasio">
+    <img src="{% static 'img/caracteristica3.jpeg' %}" alt="Características del Gimnasio">
+    <img src="{% static 'img/caracteristica4.jpeg' %}" alt="Características del Gimnasio">
+</div>
+
+<h1 style="text-align: center; color: #fff; margin-top: 40px;">Baños</h1>
+<p class="baños-descripcion">
+    Nuestras instalaciones cuentan con un baño completo<br>y una ducha, diseñadas para brindarte mayor comodidad <br> durante tu estadía de gimnasio.
+</p>
+<ul class="baños-lista">
+    <li>Baño completo: 1 unidad</li>
+    <li>Ducha independiente: 1 unidad</li>
+    <li>Ambiente confortable y funcional</li>
+</ul>
+
+<div>
+    <h1 class="UBICACION" id="ubicacion" style="color: #fff;">Ubicación</h1>
+    <p style="color: #ffffff;">haz click directo en la imagen para ir a google maps y dirigirte a la dirección</p>
+    <a class="ubicacion-link" href="https://www.google.com/maps/place/Gimnasio+KAIZEN/..." 
+       target="_blank" rel="noopener noreferrer">
+        <img src="{% static 'img/ubicacion.jpg' %}" alt="Ubicación del gimnasio" class="ubicacion-img">
+    </a>
+    <div class="UBICACION2">
+        <h1>Región Metropolitana</h1>
+        <h1>Comuna de Colina</h1>
+        <h1>Dirección: San Ambrosio 0292</h1>
+    </div>
+</div>
+
+<div style="margin-top: 90px;">
+  <a href="{% url 'seleccionar_plan' %}" target="_blank" rel="noopener noreferrer">
+    <img src="{% static 'img/tarjetacompras.png' %}" alt="Ubicación del gimnasio">
+  </a>
+</div>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    margin: 0;
+    padding: 20px 10px 0 10px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+  }
+
+  .video-container video {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    max-height: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(223, 6, 6, 0.99);
+    object-fit: contain;
+  }
+
+  .parrafo {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 18px;
+    line-height: 1.4;
+    text-align: center;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .parrafo p {
+    font-size: 22px;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(221, 2, 2, 0.5);
+    margin: 10px 0;
+  }
+
+  .caracteristicas {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin: 40px auto;
+    max-width: 1200px;
+  }
+
+  .caracteristicas img {
+    width: 22%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    object-fit: cover;
+  }
+
+  .baños-descripcion {
+    text-align: center;
+    font-size: 26px;
+    margin-top: 20px;
+    color: #fff;
+  }
+
+  .baños-lista {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    font-size: 22px;
+    color: #fff;
+  }
+
+  .baños-lista li {
+    margin: 5px 0;
+  }
+
+  .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    z-index: 100;
+  }
+
+  .whatsapp-float img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+ .whatsapp-message {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  background-color: #25D366;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  white-space: nowrap;
+  animation: fadeInUp 1s ease-out;
+  z-index: 101;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+  }
+
+  .UBICACION2 h1 {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .ubicacion-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .ubicacion-img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(223, 6, 6, 0.99);
+  }
+</style>
+
+{% endblock %}

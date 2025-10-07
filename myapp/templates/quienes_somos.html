@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load filtros %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: #000000;
+    }
+
+    .bastiangym {
+      float: left;
+      margin-top: -65px;
+      max-width: 200px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .parrafo1 {
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin: -90px;
+      overflow: hidden;
+      padding-left: 30px;
+    }
+
+    .grupos {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 120px;
+    }
+
+    .grupos img {
+      width: 20%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .linea {
+      width: 80%;
+      height: 5px;
+      background-color: #ffffff;
+      margin: 40px auto;
+      border-radius: 2px;
+    }
+
+    h2 {
+      color: #ffffff;
+      text-align: center;
+      margin-top: 120px;
+    }
+
+    /* 📱 Estilos responsivos para teléfonos */
+    @media (max-width: 600px) {
+      .bastiangym {
+        float: none;
+        display: block;
+        margin: 20px auto 0;
+        width: 80%;
+        max-width: 250px;
+      }
+
+      .parrafo1 {
+        margin: 0;
+        padding: 20px;
+        font-size: 1rem;
+      }
+
+      .grupos {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .grupos img {
+        width: 80%;
+      }
+
+      .card.text-center {
+        width: 90% !important;
+      }
+    }
+  </style>
+
+  <img src="{% static 'img/perfil.jpg' %}" class="bastiangym" alt="Bastián Carecez Díaz" />
+  <div class="parrafo1">
+    <p>
+      ¡Hola! Soy Bastián Carecez Díaz, entrenador personal con más de 
+      9 años de experiencia ayudando a personas como tú a transformar su cuerpo y su mente.
+      Mi pasión por el entrenamiento me llevó a estudiar y certificarme como Personal Trainer, 
+      y hoy tengo la satisfacción de dirigir mi propio gimnasio: un espacio creado para que logres 
+      resultados reales, sin excusas.
+      Durante estos años he acompañado a decenas de alumnos a alcanzar sus metas: perder peso, ganar músculo, 
+      mejorar su salud y, sobre todo, superarse día a día.
+    </p>
+    <p>
+      <strong>¿Qué ofrezco?</strong><br>
+      ✅ Planes personalizados para cada objetivo.<br>
+      ✅ Planes personalizados de nutrición.<br>
+      ✅ Entrenamiento vía online.<br>
+      ✅ Entrenamiento presencial.<br>
+      ✅ Gimnasio totalmente equipado.<br>
+      ✅ Seguimiento constante y motivación real.<br>
+      ✅ Ambiente motivador y comunidad de apoyo.<br>
+      ✅ Resultados comprobados.
+    </p>
+    <p>
+      Si buscas compromiso, profesionalismo y resultados, estás en el lugar correcto.<br>
+      Ven a entrenar conmigo y <strong>convierte tus metas en realidad</strong>.
+    </p>
+  </div>
+
+  <h2>Grupos de Entrenamientos</h2>
+  <div class="grupos">
+    <img src="{% static 'img/grupo1.jpeg' %}" alt="Grupo 1">
+    <img src="{% static 'img/grupo2.jpeg' %}" alt="Grupo 2">
+    <img src="{% static 'img/grupo3.jpeg' %}" alt="Grupo 3">
+  </div>
+
+  <div class="linea"></div>
+
+  <h2 style="text-align: center; color: #ffffff; margin-top: 60px;">
+    Sobre el Creador del Sitio Web
+  </h2>
+
+  <center>
+    <div class="card text-center" style="width: 18rem;">
+      <img src="{% static 'img/vicente.jpg' %}" class="card-img-top rounded-circle mx-auto d-block mt-3" alt="Vicente Suárez" style="width: 150px; height: 150px; object-fit: cover;">
+      <div class="card-body">
+        <h5 class="card-title">Vicente Suárez</h5>
+        <p class="card-text">Desarrollador y creador de esta página web.</p>
+        <p class="card-text">Estudiante de Ingeniería en Ejecución Informática.</p>
+      </div>
+    </div>
+  </center>
+{% endblock %}

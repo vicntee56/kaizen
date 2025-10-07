@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #000000 !important;
+    color: #fff !important;
+  }
+
+  /* Contenedor que aísla estilos */
+  .lista-asistencia-container {
+    background-color: #000000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+
+  .lista-asistencia-container h1,
+  .lista-asistencia-container h2,
+  .lista-asistencia-container h3 {
+    color: #FFD700;
+    text-align: center;
+  }
+
+  .lista-asistencia-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+
+  .lista-asistencia-container th,
+  .lista-asistencia-container td {
+    border: 1px solid #FFD700;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .lista-asistencia-container th {
+    background-color: #B22222;
+    color: #fff;
+  }
+
+  .lista-asistencia-container tr:nth-child(even) {
+    background-color: #330000;
+  }
+
+  .lista-asistencia-container button {
+    background-color: #B22222;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  .lista-asistencia-container button:hover {
+    background-color: #FFD700;
+    color: #000;
+  }
+
+  .lista-asistencia-container form {
+    display: inline;
+  }
+
+  .lista-asistencia-container input[type="text"] {
+    padding: 6px;
+    margin-right: 8px;
+    border-radius: 4px;
+    border: 1px solid #FFD700;
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+
+  .lista-asistencia-container input[type="text"]::placeholder {
+    color: #ccc;
+  }
+
+  .lista-asistencia-container .pagination {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .lista-asistencia-container .pagination a,
+  .lista-asistencia-container .pagination strong {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  .lista-asistencia-container .pagination a {
+    background-color: #B22222;
+    color: #fff;
+  }
+
+  .lista-asistencia-container .pagination a:hover {
+    background-color: #FFD700;
+    color: #000;
+  }
+
+  .lista-asistencia-container .pagination strong {
+    background-color: #FFD700;
+    color: #000;
+    font-weight: bold;
+  }
+</style>
+
+<div class="lista-asistencia-container">
+  <h1>Asistencias de Hoy: {{ fecha_hoy }}</h1>
+
+  <h2>Usuarios Registrados</h2>
+  <table>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Acción</th>
+    </tr>
+    {% for user in usuarios %}
+      <tr>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.last_name }}</td>
+        <td>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <button type="submit">Marcar Presente</button>
+          </form>
+        </td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="3">No hay usuarios disponibles para marcar presente.</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Invitado</h2>
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="text" name="apellido" placeholder="Apellido" required>
+    <button type="submit">Marcar Presente</button>
+  </form>
+
+  <h2>Asistencias de Hoy</h2>
+  <table>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Fecha y Hora</th>
+      <th>Eliminar</th>
+    </tr>
+    {% for asistencia in asistencias %}
+      <tr>
+        <td>{{ asistencia.nombre }}</td>
+        <td>{{ asistencia.apellido }}</td>
+        <td>{{ asistencia.fecha_hora|date:"H:i d/m/Y" }}</td>
+        <td>
+          <form method="post" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="delete_id" value="{{ asistencia.id }}">
+            <button type="submit">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="4">No hay asistencias registradas hoy.</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Historial Semanal de Asistencias</h2>
+  {% if historial %}
+    {% for fecha, asistencias_fecha in historial.items %}
+      <h3>Semana del: {{ fecha }}</h3>
+      <table>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Fecha y Hora</th>
+          <th>Eliminar</th>
+        </tr>
+        {% for asistencia in asistencias_fecha %}
+          <tr>
+            <td>{{ asistencia.nombre }}</td>
+            <td>{{ asistencia.apellido }}</td>
+            <td>{{ asistencia.fecha_hora|date:"H:i d/m/Y" }}</td>
+            <td>
+              <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="delete_id" value="{{ asistencia.id }}">
+                <button type="submit">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% endfor %}
+
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">« Semana Anterior</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <strong>{{ num }}</strong>
+        {% else %}
+          <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Semana Siguiente »</a>
+      {% endif %}
+    </div>
+  {% else %}
+    <p>No hay historial de semanas anteriores.</p>
+  {% endif %}
+</div>
+{% endblock %}

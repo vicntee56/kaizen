@@ -1,0 +1,141 @@
+/* Fondo futurista */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000;
+    color: #e0e0e0;
+}
+
+/* Clase que envuelve todo en esta página */
+.pagina-calculadora {
+    padding-top: 70px; /* Deja espacio para botón hamburguesa fijo */
+    position: relative; /* Para contexto */
+}
+
+/* Botón hamburguesa SOLO en esta página */
+/* Asegúrate de que el botón tenga esta clase en base.html: class="menu-toggle" */
+.pagina-calculadora .menu-toggle {
+    display: block !important;
+    position: fixed !important;
+    top: 15px !important;
+    right: 15px !important;
+    background: #fff !important;
+    color: #000 !important;
+    padding: 8px 12px !important;
+    border-radius: 5px !important;
+    font-size: 1.8em !important;
+    cursor: pointer !important;
+    border: none !important;
+    z-index: 3000 !important; /* Muy alto para estar sobre todo */
+    transition: background-color 0.3s ease !important;
+}
+
+.pagina-calculadora .menu-toggle:hover {
+    background-color: #eee !important;
+    color: #000 !important;
+}
+
+/* Contenedor centrado */
+.contenedor-futurista {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Título */
+.titulo-futurista {
+    font-size: 2.5rem;
+    color: rgb(255, 255, 255) !important;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Formulario */
+.formulario-futurista {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgb(177, 29, 29);
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Inputs y select */
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background: #1a1a1a;
+    border: 1px solid #ffffff;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+    border-color: #e81b00;
+}
+
+/* Botón calcular */
+.btn-calcular {
+    margin-top: 25px;
+    width: 100%;
+    padding: 12px;
+    background: #ff0000;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    position: relative;
+    z-index: 10; /* Para estar arriba del fondo */
+}
+
+.btn-calcular:hover {
+    background: #e1ff01;
+    transform: scale(1.03);
+}
+
+/* Resultado */
+.resultado {
+    margin-top: 30px;
+    background: #121212;
+    border-left: 5px solid #ff0000;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .titulo-futurista {
+        font-size: 1.8rem;
+    }
+
+    .formulario-futurista {
+        padding: 20px;
+    }
+
+    input, select, .btn-calcular {
+        font-size: 0.95rem;
+    }
+}

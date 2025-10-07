@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load filtros %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserva de Horario</title>
+    <link rel="stylesheet" href="{% static 'css/horario.css' %}">
+    <style>
+    .horario-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #d4edda;
+        border-radius: 8px;
+        border: 2px solid #e40000;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 12px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .reservado {
+        background-color: #ff0015;
+        color: white;
+        font-weight: bold;
+    }
+
+    .disponible {
+        background-color: #d4edda;
+    }
+
+    .btn-reservar {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .btn-reservar:disabled {
+        background-color: #aaa;
+        cursor: not-allowed;
+    }
+
+    .mensaje {
+        margin-top: 20px;
+        color: red;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    /* Contenedor para hacer la tabla desplazable en móvil */
+    .tabla-responsive {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        .btn-reservar {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+        }
+
+        .mensaje {
+            font-size: 14px;
+        }
+
+        h1 {
+            font-size: 22px;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        th, td {
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        .btn-reservar {
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        label {
+            font-size: 12px;
+        }
+    }
+</style>
+</head>
+<body style="background-color: #000000;">
+
+    <h1 style="color: #ffffff;">Reserva de Horarios</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li class="mensaje">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if user.is_authenticated and puede_reservar %}
+    <form method="post" action="{% url 'reservar_horarios_varios' %}" id="form-reserva">
+        {% csrf_token %}
+        <table class="horario-table">
+            <thead>
+                <tr>
+                    <th>Horas</th>
+                    {% for dia in dias %}
+                        <th>{{ dia }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for fila in horarios_tabla %}
+                <tr>
+                    <td>{{ fila.hora_inicio }} - {{ fila.hora_fin }}</td>
+                    {% for dia_info in fila.dias %}
+                        {% if dia_info.horario_id %}
+                            <td class="{% if dia_info.reservas >= dia_info.capacidad %}reservado{% else %}disponible{% endif %}">
+                                {% if dia_info.reservas >= dia_info.capacidad %}
+                                    Ocupado<br>{{ dia_info.capacidad }}/{{ dia_info.capacidad }}
+                                {% else %}
+                                    <label>
+                                        <input type="checkbox" name="reservas" value="{{ dia_info.horario_id }}|{{ dia_info.dia }}" class="checkbox-dia">
+                                        {{ dia_info.reservas }}/{{ dia_info.capacidad }}
+                                    </label>
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="mensaje" id="error-mensaje" style="display: none;">Solo puedes reservar hasta 3 días diferentes.</p>
+        <button type="submit" class="btn-reservar">Confirmar Reserva</button>
+    </form>
+
+    <script>
+        const permisoTodosDias = {{ permiso_todos_dias|yesno:"true,false" }};
+        
+        document.getElementById('form-reserva').addEventListener('submit', function (e) {
+            if (!permisoTodosDias) {
+                const checkboxes = document.querySelectorAll('.checkbox-dia:checked');
+                const diasSeleccionados = new Set();
+
+                checkboxes.forEach(cb => {
+                    const dia = cb.value.split('|')[1];
+                    diasSeleccionados.add(dia);
+                });
+
+                if (diasSeleccionados.size > 3) {
+                    e.preventDefault();
+                    document.getElementById('error-mensaje').style.display = 'block';
+                }
+            }
+        });
+
+        // Bloquear selección de más de una franja en el mismo día en tiempo real
+        document.querySelectorAll('.checkbox-dia').forEach(cb => {
+            cb.addEventListener('change', function() {
+                const diaSeleccionado = this.value.split('|')[1];
+
+                if (this.checked) {
+                    // Desactiva otras franjas del mismo día
+                    document.querySelectorAll('.checkbox-dia').forEach(other => {
+                        const diaOther = other.value.split('|')[1];
+                        if (diaOther === diaSeleccionado && other !== this) {
+                            other.disabled = true;
+                        }
+                    });
+                } else {
+                    // Reactiva otras franjas del mismo día
+                    document.querySelectorAll('.checkbox-dia').forEach(other => {
+                        const diaOther = other.value.split('|')[1];
+                        if (diaOther === diaSeleccionado) {
+                            other.disabled = false;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    {% else %}
+    <!-- Tabla pública para usuarios no autenticados -->
+    <table class="horario-table">
+        <thead>
+            <tr>
+                <th>Hora</th>
+                {% for dia in dias %}
+                    <th>{{ dia }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for fila in horarios_tabla %}
+            <tr>
+                <td>{{ fila.hora_inicio }} - {{ fila.hora_fin }}</td>
+                {% for dia_info in fila.dias %}
+                    {% if dia_info.horario_id %}
+                        <td class="{% if dia_info.reservas >= dia_info.capacidad %}reservado{% else %}disponible{% endif %}">
+                            {{ dia_info.reservas }}/{{ dia_info.capacidad }}
+                        </td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="mensaje">Debes iniciar sesión para poder reservar horarios.</p>
+    {% endif %}
+
+</body>
+</html>
+{% endblock %}

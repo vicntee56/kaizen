@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agregar Horario</title>
+</head>
+<body>
+    <h1>Agregar Nuevo Horario</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+    <a href="{% url 'horario' %}">Volver a la lista de horarios</a>
+</body>
+</html>

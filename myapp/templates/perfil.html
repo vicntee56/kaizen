@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #000;
+    color: #fff;
+  }
+
+  h1, h2 {
+    margin-top: 0.5em;
+    margin-left: 10px;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    margin: 1em 10px;
+    width: calc(100% - 20px);
+  }
+
+  table.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+
+  table.table th, table.table td {
+    padding: 10px;
+    border: 1px solid #555;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .btn-danger {
+    background-color: #ff4c4c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .btn-danger:hover {
+    background-color: #e60000;
+  }
+
+  .iframe-container {
+    position: relative;
+    width: calc(100% - 20px);
+    margin: 20px 10px;
+    padding-bottom: 65%;
+    height: 0;
+    overflow: hidden;
+    background-color: #111;
+    border: 1px solid #555;
+    border-radius: 8px;
+  }
+
+  .iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .expand-btn {
+    margin: 10px 10px;
+    padding: 8px 16px;
+    font-size: 0.95em;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .expand-btn:hover {
+    background-color: #cc0000;
+  }
+
+  #exitFullscreenBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    font-size: 0.85em;
+    background-color: #e60000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    z-index: 999;
+    display: none;
+  }
+
+  form {
+    margin: 20px 10px;
+  }
+
+  label, input, button {
+    display: block;
+    margin-top: 10px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px;
+    background-color: #222;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 600px) {
+    h1, h2 {
+      font-size: 1.2em;
+    }
+
+    .expand-btn {
+      width: 100%;
+    }
+  }
+
+  .salir-btn {
+    margin-left: 120px;
+  }
+
+  #errorMsg {
+    margin: 10px;
+    color: #ff6666;
+  }
+
+  .notificacion-pago {
+    background-color: #ffcc00;
+    color: #000;
+    padding: 10px;
+    margin: 10px 10px 20px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  .sheet-actions {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+  }
+</style>
+
+<h1 style="color: aliceblue;">Perfil de {{ user.first_name }} {{ user.last_name }}</h1>
+
+{% if mensaje_pago %}
+  <div class="notificacion-pago">
+    {{ mensaje_pago }}
+  </div>
+{% endif %}
+
+<h2>Mis Horarios Reservados</h2>
+
+<div class="table-responsive">
+  {% if reservas %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Día</th>
+        <th>Hora de Inicio</th>
+        <th>Hora de Fin</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reserva in reservas %}
+      <tr>
+        <td>{{ reserva.horario.dia }}</td>
+        <td>{{ reserva.horario.hora_inicio|time:"H:i" }}</td>
+        <td>{{ reserva.horario.hora_fin|time:"H:i" }}</td>
+        <td>
+          <form method="post" action="{% url 'cancelar_reserva' reserva.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Cancelar</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="margin-left: 10px;">No tienes ninguna reserva aún.</p>
+  {% endif %}
+</div>
+
+<h2>Mi plantilla de Google Sheets</h2>
+
+{% if profile.sheet_id %}
+  <div class="sheet-actions">
+    <button class="expand-btn" onclick="openFullscreen()">Pantalla completa</button>
+    <button class="expand-btn" onclick="openSheetDirect()">Abrir en nueva pestaña</button>
+  </div>
+
+  <div class="iframe-container" id="sheetContainer">
+    <iframe
+      id="sheetIframe"
+      src="https://docs.google.com/spreadsheets/d/{{ profile.sheet_id }}/preview?rm=minimal&widget=false&headers=false"
+      sandbox="allow-scripts allow-same-origin"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+    <button id="exitFullscreenBtn" onclick="exitFullscreen()" class="salir-btn">Salir pantalla completa</button>
+  </div>
+
+  <div id="errorMsg" style="display:none; margin: 20px; padding: 15px; background: #2a2a2a; border-radius: 5px;">
+    <p>No pudimos cargar la plantilla. Posibles soluciones:</p>
+    <ul>
+      <li>Permite cookies de terceros en tu navegador</li>
+      <li>Verifica que el archivo tenga permisos públicos</li>
+      <li>Prueba en modo incógnito o con extensiones desactivadas</li>
+    </ul>
+    <button onclick="openSheetDirect()" class="expand-btn" style="margin-top: 10px;">
+      Abrir hoja directamente en Google Sheets
+    </button>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('sheetIframe');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Timeout para detectar si iframe no carga (5 segundos)
+    const loadTimeout = setTimeout(() => {
+      if (!iframe.contentDocument || iframe.contentDocument.readyState !== 'complete') {
+        iframe.style.display = 'none';
+        errorMsg.style.display = 'block';
+      }
+    }, 5000);
+
+    // Si iframe carga correctamente, cancelamos el timeout
+    iframe.onload = () => {
+      clearTimeout(loadTimeout);
+      // Verificación adicional de carga
+      try {
+        if (iframe.contentDocument.readyState === 'complete') {
+          iframe.style.display = 'block';
+          errorMsg.style.display = 'none';
+        }
+      } catch (e) {
+        iframe.style.display = 'none';
+        errorMsg.style.display = 'block';
+      }
+    };
+
+    function openSheetDirect() {
+      window.open('https://docs.google.com/spreadsheets/d/{{ profile.sheet_id }}/edit', '_blank');
+    }
+
+    function openFullscreen() {
+      const container = document.getElementById('sheetContainer');
+      if (container.requestFullscreen) {
+        container.requestFullscreen();
+      } else if (container.webkitRequestFullscreen) {
+        container.webkitRequestFullscreen();
+      } else if (container.msRequestFullscreen) {
+        container.msRequestFullscreen();
+      }
+    }
+
+    function exitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+
+    document.addEventListener("fullscreenchange", function() {
+      const btn = document.getElementById("exitFullscreenBtn");
+      btn.style.display = document.fullscreenElement ? "block" : "none";
+    });
+  </script>
+{% else %}
+  <p style="margin-left: 10px;">No tienes hoja de cálculo asignada aún.</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+  <label for="sheet_id_or_url">Pega aquí tu enlace de Google Sheets o solo el ID:</label>
+  <input type="text" id="sheet_id_or_url" name="sheet_id_or_url" required
+         placeholder="Ej: 1A2B3C4D... o https://docs.google.com/...">
+  <button type="submit" class="expand-btn">Guardar Plantilla</button>
+</form>
+
+{% endblock %}

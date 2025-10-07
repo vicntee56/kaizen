@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificar Cuenta</title>
+</head>
+<body>
+    <h1>Introduce el código de verificación</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="verification_code">Código de verificación</label>
+            <input type="text" id="verification_code" name="verification_code" required>
+        </div>
+        <button type="submit">Verificar</button>
+    </form>
+
+    <!-- Botón para reenviar el código -->
+    <form method="POST" action="{% url 'reenviar_codigo' %}" style="margin-top: 1em;">
+        {% csrf_token %}
+        <button type="submit">Reenviar código</button>
+    </form>
+</body>
+</html>

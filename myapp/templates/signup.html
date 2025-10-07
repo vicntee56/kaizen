@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/registrar.css' %}">
+
+<div class="signup-container">
+    <h2>Crear Cuenta</h2>
+
+    <form method="post" enctype="multipart/form-data" class="signup-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for field in form.visible_fields %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <p class="error">{{ field.errors.0 }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn-signup">Registrarse</button>
+    </form>
+
+    <p class="login-link">¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a></p>
+</div>
+{% endblock %}

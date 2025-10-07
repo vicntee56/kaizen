@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error de Verificación</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="alert alert-danger mt-5">
+            <h1>Error</h1>
+            <p>{{ message }}</p>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Solicitar nuevo código</a>
+        </div>
+    </div>
+</body>
+</html>

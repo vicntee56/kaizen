@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/calculadora.css' %}">
+
+<div class="pagina-calculadora">
+  <div class="contenedor-futurista">
+    <h1 class="titulo-futurista">Calculadora de Nivel de Fuerza</h1>
+
+    <form method="post" class="formulario-futurista">
+      {% csrf_token %}
+
+      <label for="peso_usuario">Peso corporal (kg):</label>
+      <input type="number" name="peso_usuario" id="peso_usuario" step="any" required>
+
+      <label for="ejercicio">Ejercicio:</label>
+      <select name="ejercicio" id="ejercicio" required>
+          <option value="">-- Selecciona un ejercicio --</option>
+          <option value="press_banca">Press de banca</option>
+          <option value="sentadilla">Sentadilla</option>
+          <option value="peso_muerto">Peso muerto</option>
+          <option value="press_militar">Press militar</option>
+          <option value="dominadas">Dominadas</option>
+      </select>
+
+      <div id="peso-section">
+          <label for="peso_levantado">Peso levantado (kg):</label>
+          <input type="number" name="peso_levantado" id="peso_levantado" step="any">
+      </div>
+
+      <label for="reps">Repeticiones:</label>
+      <input type="number" name="reps" id="reps">
+
+      <button type="submit" class="btn-calcular">⚡ Calcular Nivel</button>
+    </form>
+
+    {% if resultado %}
+      <div class="resultado">
+          <h2>Resultado:</h2>
+          {% if resultado.error %}
+            <p style="color:red;">{{ resultado.error }}</p>
+          {% else %}
+            <p><strong>{{ resultado.ejercicio|capfirst }}:</strong> {{ resultado.nivel }}</p>
+          {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  const ejercicioSelect = document.getElementById('ejercicio');
+  const pesoSection = document.getElementById('peso-section');
+
+  ejercicioSelect.addEventListener('change', function () {
+      if (this.value === 'dominadas') {
+          pesoSection.style.display = 'none';
+      } else {
+          pesoSection.style.display = 'block';
+      }
+  });
+</script>
+{% endblock %}

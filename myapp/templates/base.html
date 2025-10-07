@@ -1,0 +1,127 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>GYM KAIZEN</title>
+    <link rel="icon" type="image/jpeg" href="{% static 'img/dragon.jpeg' %}">
+    
+
+    <!-- Estilos externos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsuites@4.10.1/dist/jsuites.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jspreadsheet-ce@4.10.1/dist/jspreadsheet.css">
+
+    <!-- Tu CSS personalizado -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+</head>
+
+
+<body>
+     
+    <!-- Encabezado principal con el nombre del gimnasio -->
+    <header>
+
+       
+        <h1 class="titulo">GYM KAIZEN</h1>
+        <!-- Si tienes logo -->
+       
+    </header>
+
+    <img src="{% static 'img/dragon.jpeg' %}" alt="Mi Imagen" class="circle-container">
+    
+        
+    
+
+ <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+<!-- Menú de navegación -->
+<nav>
+    <ul class="nav-list">
+        <li><a href="/">INICIO</a></li>
+        <li><a href="{% url 'home' %}#ubicacion">UBICACION</a></li>
+        <li><a href="{% url 'quienes_somos' %}">QUIENES SOMOS</a></li>
+        {% if user.is_authenticated and user.is_superuser %}
+        <li><a href="{% url 'lista_asistencia' %}">Lista de Asistencia</a></li>
+        {% endif %}
+
+        <li><a href="/horario">Horario</a></li>
+        <!-- dropp down menu-->
+         <li class="nav-item dropdown">
+ <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)" style="margin-top: -8px;">contactos ▾</a>
+  <ul class="dropdown-menu">
+    <li><a href="https://www.instagram.com/bastian_trainer/" target="_blank">Instagram</a></li>
+    <li><a href="https://web.facebook.com/bastian.caceresdiaz/?_rdc=1&_rdr#">Facebook</a></li>
+    <li><a href="https://www.youtube.com/@bastiancacerestrainer589" target="_blank">YouTube</a></li>
+    <li><a href="https://www.tiktok.com/search?q=bastiam_trainer&t=1752003770310">TikTok</a></li>
+    <li><a href="https://wa.me/56984869876">WhatsApp</a></li>
+  </ul>
+  <li><a href="{% url 'seleccionar_plan' %}">Mensualidades</a></li>
+<li><a href="/calculadora/">calculadora</a></li>
+
+</li>
+
+
+        {% if not user.is_authenticated %}
+            <li><a href="/signin">Iniciar sesión</a></li>
+        {% else %}
+            <li><a href="/perfil">Mi Perfil</a></li>
+            <li><a href="/logout">Cerrar sesión</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+    <!-- Contenido principal -->
+    <main class="container">
+        {% block content %}
+        <div class="content">
+            <h2>Bienvenido a GYM KAIZEN</h2>
+            <p>Aquí podrás gestionar tus rutinas, horarios y más.</p>
+        </div>
+        {% endblock %}
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jsuites@4.10.1/dist/jsuites.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspreadsheet-ce@4.10.1/dist/jspreadsheet.js"></script>
+
+
+    <!-- navbar menu despegable-->
+    <script>
+    function toggleMenu() {
+        const navList = document.querySelector('.nav-list');
+        navList.classList.toggle('show');
+    }
+   </script>
+<!--activar el dropdown-->
+
+<script>
+  function toggleDropdown(event) {
+    event.preventDefault();
+    const dropdown = event.target.closest('.dropdown');
+    dropdown.classList.toggle('show');
+
+    // Cierra otros dropdowns abiertos si hay más de uno
+    document.querySelectorAll('.dropdown').forEach(el => {
+      if (el !== dropdown) el.classList.remove('show');
+    });
+  }
+
+  // Cierra el dropdown si se hace clic fuera
+  document.addEventListener('click', function (event) {
+    if (!event.target.closest('.dropdown')) {
+      document.querySelectorAll('.dropdown').forEach(el => el.classList.remove('show'));
+    }
+  });
+</script>
+
+
+
+
+</body>
+
+</html>

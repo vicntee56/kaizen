@@ -1,0 +1,24 @@
+# Entorno virtual
+venv/
+
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Base de datos SQLite (si la usas)
+*.sqlite3
+
+# Archivos de entorno
+.env
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de VSCode (opcional)
+.vscode/
+
+# Carpeta de migraciones (si no quieres subirlas)
+*/migrations/__pycache__/

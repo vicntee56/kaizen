@@ -1,0 +1,97 @@
+/* Fondo general y fuente */
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+/* Tabla principal */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabecera de la tabla */
+th {
+    background-color: #333333;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border: 2px solid #444444;
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+/* Celdas */
+td {
+    padding: 12px 15px;
+    border: 2px solid #444444;
+    text-align: left;
+    background-color: #fafafa;
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+/* Estilo al editar celda */
+td:focus {
+    outline: 2px solid #007BFF;
+    background-color: #eef;
+}
+
+/* Fila al pasar el mouse */
+tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Contenedor de tabla con scroll horizontal si es necesario */
+.table-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+/* Botones */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Colores personalizados de celdas */
+.color-celda-1 {
+    background-color: #ffeb3b; /* Amarillo */
+}
+
+.color-celda-2 {
+    background-color: #4caf50; /* Verde */
+}
+
+.color-celda-3 {
+    background-color: #f44336; /* Rojo */
+}
+
+/* Celdas no editables */
+.non-editable-cell {
+    background-color: #f0f0f0;
+    color: gray;
+    cursor: not-allowed;
+}
+
+td.seleccionada {
+    outline: 2px solid orange;
+    background-color: #ffe9b5;
+}

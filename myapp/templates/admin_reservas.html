@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Reservas Pendientes</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Día</th>
+            <th>Hora</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reserva in reservas %}
+        <tr>
+            <td>{{ reserva.user.first_name }} {{ reserva.user.last_name }}</td>
+            <td>{{ reserva.horario.dia }}</td>
+            <td>{{ reserva.horario.hora_inicio }} - {{ reserva.horario.hora_fin }}</td>
+            <td>{{ reserva.fecha_reserva }}</td>
+            <td>
+                <form method="post" action="{% url 'aprobar_reserva' reserva.id %}">
+                    {% csrf_token %}
+                    <button type="submit">✅ Aprobar</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No hay reservas pendientes.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

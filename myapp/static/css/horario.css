@@ -1,0 +1,24 @@
+.horario-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.horario-table th, .horario-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+.disponible {
+    background-color: #d4edda;
+}
+.reservado {
+    background-color: #f8d7da;
+}
+.reservar-btn {
+    padding: 5px 10px;
+}
+
+.reservar-btn[disabled] {
+    background-color: #aaa;
+    color: white;
+    cursor: not-allowed;
+}

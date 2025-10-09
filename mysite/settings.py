@@ -9,7 +9,8 @@ ALLOWED_HOSTS = ['kaizen-f3xj.onrender.com', 'localhost', '127.0.0.1']
 
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://kaizen-f3xj.onrender.com']
+
 # ---------------------------
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

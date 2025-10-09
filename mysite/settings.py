@@ -6,12 +6,16 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-vzm0nlqj6wd$hb9+*l4*w
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['kaizen-f3xj.onrender.com', 'localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://kaizen-f3xj.onrender.com']
+
+# Opcional pero recomendado en Render
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # ---------------------------
 
 
 
 
-CSRF_TRUSTED_ORIGINS = ['https://kaizen-f3xj.onrender.com']
+
 
 # ---------------------------
 

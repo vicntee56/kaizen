@@ -967,3 +967,4 @@ def enviar_correo(destinatario, asunto, mensaje):
 
 def politica_privacidad(request):
     return render(request, 'privacidad.html')
+

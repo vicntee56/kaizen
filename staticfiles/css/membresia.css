@@ -1,0 +1,30 @@
+/* Estilos para los checkboxes */
+.form-row .fieldBox.field-pagado,
+.form-row .fieldBox.field-no_pagado {
+    display: inline-block;
+    margin: 0 15px 0 0;
+    padding: 8px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+/* Estilo para etiquetas */
+.field-pagado label,
+.field-no_pagado label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    margin-left: 3px;
+}
+
+/* Estado activo */
+.field-pagado input:checked + label {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.field-no_pagado input:checked + label {
+    color: #dc3545;
+    font-weight: bold;
+}

@@ -4,7 +4,13 @@ from pathlib import Path
 # --- Ajustes para Render ---
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-vzm0nlqj6wd$hb9+*l4*wqjv(3q4!1#aiqrwnlxco5ec6h@k-=')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', ''), 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'kaizen-f3xj.onrender.com'),
+    'kaizen-f3xj.onrender.com',
+    'localhost',
+    '127.0.0.1'
+]
+
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 # ---------------------------
 

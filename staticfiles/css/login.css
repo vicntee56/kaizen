@@ -1,0 +1,83 @@
+body {
+    background-color: #121212;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 80px auto;
+    background: #1e1e1e;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #ff0000;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ff3b3b;
+}
+
+.login-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    background: #2c2c2c;
+    color: #fff;
+    outline: none;
+}
+
+.login-form input:focus {
+    border-color: #ff0000;
+}
+
+.btn-login {
+    width: 100%;
+    margin-top: 20px;
+    background: #ff0000;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-login:hover {
+    background: #ffc107;
+    color: #000;
+}
+
+.error-message {
+    background-color: #661010;
+    color: #ffbaba;
+    padding: 10px;
+    border-left: 5px solid red;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.extra-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.extra-links a {
+    color: #ff6b6b;
+    text-decoration: none;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}

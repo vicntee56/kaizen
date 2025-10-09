@@ -1,3 +1,8 @@
+/* =================== IMPORTACIÓN DE FUENTES =================== */
+@import url(https://fonts.googleapis.com/css?family=Poppins:wght@300;500;600&display=swap);
+@import url('https://fonts.googleapis.com/css2?family=Skranji:wght@400;700&display=swap');
+
+/* =================== ESTILOS GENERALES =================== */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f7fc;
@@ -5,46 +10,44 @@ body {
     padding: 0;
 }
 
+/* =================== ENCABEZADO =================== */
 header {
     background: linear-gradient(to right, rgb(16, 8, 8), rgb(177, 51, 23), black);
     color: #fff;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    box-sizing: border-box;
-}
-
-.circle-container {
-    /* Centrar el contenido dentro del contenedor */
+    height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px; /* Establece un tamaño para el contenedor */
-    height: 200px; /* Establece un tamaño para el contenedor */
-    margin: 20px auto; /* Centra el contenedor en la página */
-    border: 4px solid #4CAF50; /* Borde verde alrededor del contenedor */
-    border-radius: 50%; /* Hace que el contenedor sea un círculo */
-    overflow: hidden; /* Evita que la imagen se desborde */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil alrededor del contenedor */
+    width: 100%;
 }
 
-.circle-container img {
-    width: 100%; /* La imagen ocupará todo el espacio del contenedor */
-    height: 100%; /* La imagen ocupará todo el espacio del contenedor */
-    object-fit: cover; /* La imagen se recorta para llenar el contenedor */
+.titulo {
+    font-family: "Skranji", system-ui;
+    font-weight: 700;
+    text-shadow: 2px 2px 5px rgb(38, 0, 255);
+    margin: 0;
+    text-align: center;
 }
+
+/* =================== IMAGEN DE PERFIL CIRCULAR =================== */
+.circle-container {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    margin-top: -120px;
+    border: 4px solid #af4c4c;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* =================== NAVEGACIÓN =================== */
 nav {
     background-color: #2c3e50;
-    position: fixed;
-    top: 120px; /* Ajustado para que no se tape */
-    left: 0;
     width: 100%;
     padding: 10px 0;
-    z-index: 1001;
+    margin-top: 0;
+    z-index: 100;
 }
 
 nav ul {
@@ -73,8 +76,73 @@ nav ul li a:hover {
     background-color: #16a085;
 }
 
+/* =================== BOTÓN HAMBURGUESA =================== */
+.menu-toggle {
+    display: none;
+    font-size: 2em;
+    background: none;
+    color: rgb(255, 255, 255);
+    border: none;
+    position: absolute;
+    top: 130px; /* Justo debajo del header */
+    right: 20px;
+    z-index: 1100;
+    cursor: pointer;
+}
+
+/* =================== DROPDOWN MENU =================== */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+    display: inline-block;
+    padding: 8px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.dropdown-toggle:hover {
+    background-color: #16a085;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #34495e;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.dropdown-menu li {
+    list-style: none;
+}
+
+.dropdown-menu a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu a:hover {
+    background-color: #1abc9c;
+}
+
+/* Mostrar el dropdown cuando está activo */
+.nav-item.show .dropdown-menu {
+    display: block;
+}
+
+/* =================== CONTENIDO PRINCIPAL =================== */
 .container {
-    margin-top: 200px;
+    margin-top: 160px; /* Espacio para header + botón */
     padding: 20px;
 }
 
@@ -91,6 +159,7 @@ nav ul li a:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* =================== TARJETAS =================== */
 .card {
     background-color: #fff;
     border: 1px solid #e0e0e0;
@@ -110,19 +179,60 @@ nav ul li a:hover {
     font-weight: bold;
 }
 
+/* =================== RESPONSIVE (<=768px) =================== */
 @media (max-width: 768px) {
     nav ul {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+        display: none;
+        background-color: #34495e;
+        width: 100%;
+        position: static; /* Ya no es fixed */
+        padding: 10px 0;
+    }
+
+    nav ul.show {
+        display: flex;
     }
 
     nav ul li {
+        width: 100%;
+        text-align: left;
+        padding-left: 20px;
         margin: 10px 0;
     }
 
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 130px;
+        right: 20px;
+        z-index: 1100;
+    }
+
+    .nav-item.dropdown {
+        position: static;
+        width: 100%;
+        text-align: left;
+    }
+
+    .dropdown-menu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        margin-top: 0;
+        border-radius: 0;
+        background-color: #2c3e50;
+        padding-left: 20px;
+    }
+
+    .dropdown-menu a {
+        padding-left: 10px;
+    }
+
     .container {
+        margin-top: 180px;
         padding: 15px;
-        margin-top: 220px;
     }
 
     .content {

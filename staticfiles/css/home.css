@@ -1,0 +1,108 @@
+/* ========================================================
+   FUENTES Y ESTILOS GENERALES DEL CUERPO DE LA PÁGINA
+======================================================== */
+body {
+    font-family: Arial, sans-serif;    /* Fuente principal del sitio */
+    background-color: #000;            /* Fondo negro para estilo oscuro */
+    color: white;                      /* Texto blanco */
+    margin: 0;                         /* Elimina márgenes del navegador */
+    padding: 0;                        /* Elimina padding por defecto */
+}
+
+/* ========================================================
+   CONTENEDOR PRINCIPAL DE TODA LA INFORMACIÓN
+======================================================== */
+.container {
+    margin: 0;                         /* Elimina espacio alrededor */
+    padding: 20px 10px 0 10px;         /* Padding superior leve y laterales */
+    text-align: center;                /* Centra el contenido dentro */
+}
+
+/* ========================================================
+   SECCIÓN HERO (TÍTULO PRINCIPAL)
+======================================================== */
+.hero {
+    margin-top: 0;                     /* Elimina separación superior */
+    padding: 10px;                     /* Espaciado interno */
+}
+
+.hero h1 {
+    font-size: 28px;                   /* Tamaño de letra grande */
+    font-weight: bold;                /* Texto en negrita */
+    color: #fff;                       /* Color blanco */
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5); /* Sombra suave */
+}
+
+/* ========================================================
+   CONTENEDOR DEL VIDEO
+======================================================== */
+.video-container {
+    display: flex;                     /* Flexbox para centrar */
+    justify-content: center;          /* Centra horizontalmente */
+    margin-top: 20px;                 /* Espacio desde el título */
+}
+
+/* ========================================================
+   VIDEO EN SÍ (TAMAÑO Y ESTILO)
+======================================================== */
+video {
+    width: 100%;                      /* Se adapta al ancho del contenedor */
+    max-width: 1000px;                /* Máximo ancho para pantallas grandes */
+    height: auto;                     /* Altura proporcional automática */
+    max-height: 400px;                /* Limita altura para evitar excesos */
+    border-radius: 10px;              /* Bordes redondeados */
+    box-shadow: 0 4px 12px rgba(223, 6, 6, 0.99); /* Sombra suave */
+    object-fit: contain;              /* Asegura que el video no se deforme */
+}
+
+/* ========================================================
+   SECCIÓN DE PÁRRAFOS DE INFORMACIÓN
+======================================================== */
+.parrafo {
+    margin-top: 20px;                 /* Separación del video */
+    padding: 10px;                    /* Espacio interno */
+    font-size: 18px;                  /* Tamaño del texto */
+    line-height: 1.6;                 /* Altura de línea para legibilidad */
+    text-align: center;               /* Centrado del texto */
+}
+
+/* ========================================================
+   ESTILO DE LOS PÁRRAFOS INTERNOS
+======================================================== */
+.parrafo p {
+     font-size: 28px;                   /* Tamaño de letra grande */
+    font-weight: bold;                /* Texto en negrita */
+    color: #fff;                       /* Color blanco */
+    text-shadow: 2px 2px 5px rgba(221, 2, 2, 0.5); /* Sombra suave */                /* Color blanco */
+}
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    z-index: 100;
+    animation: floatUp 1s ease-out forwards;
+    opacity: 0;
+}
+
+.whatsapp-float img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Animación desde abajo hacia arriba */
+@keyframes floatUp {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.UBICACION {
+   color: #fff;
+}

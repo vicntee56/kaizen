@@ -7,8 +7,9 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['kaizen-f3xj.onrender.com', 'localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://kaizen-f3xj.onrender.com']
 
-# Opcional pero recomendado en Render
+# Opcional pero recomendable para Render
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 # ---------------------------
 
